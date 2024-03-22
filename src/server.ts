@@ -1,9 +1,16 @@
-const server = Bun.serve({
-  fetch(req) {
-    const url = new URL(req.url);
+import { Pages } from "./pages/_";
 
-    if (url.pathname === "/") {
-      return new Response(Bun.file("src/index.html"));
+const server = Bun.serve({
+  async fetch(req) {
+    const route = Pages.router.match(req);
+    if (route) {
+      try {
+        const { default: page } = await import(route.filePath);
+        // TODO test that it is a function
+        return page(req);
+      } catch (err) {
+        return new Response(null, { status: 500 });
+      }
     }
 
     return new Response(null, { status: 404 });
