@@ -18,3 +18,4 @@ const server = Bun.serve({
 });
 
 console.log("• started server on", server.url.href);
+console.table(Object.entries(Pages.router.routes).sort());
