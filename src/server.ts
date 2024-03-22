@@ -1,6 +1,7 @@
 import { Pages } from "./pages/_";
 
-const server = Bun.serve({
+export const server = Bun.serve({
+  port: import.meta.env.NODE_ENV === "test" ? 3301 : 3300,
   async fetch(req) {
     const route = Pages.router.match(req);
     if (route) {
@@ -18,4 +19,5 @@ const server = Bun.serve({
 });
 
 console.log("• started server on", server.url.href);
-console.table(Object.entries(Pages.router.routes).sort());
+if (import.meta.env.NODE_ENV === "development")
+  console.table(Object.entries(Pages.router.routes).sort());
