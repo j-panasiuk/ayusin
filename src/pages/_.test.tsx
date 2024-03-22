@@ -1,9 +1,9 @@
 import { test, expect } from "bun:test";
-import { PAGES, PAGE_EXTENSION } from "./_";
+import { Pages } from "./_";
 
-test(`${PAGES} folder - each page exports a request handler that returns HTML response`, async () => {
-  const include = `**/**.${PAGE_EXTENSION}`;
-  const scanned = new Bun.Glob(include).scanSync(`src/${PAGES}`);
+test(`${Pages.DIR} - each page exports request handler that returns HTML response`, async () => {
+  const include = `**/**.${Pages.EXT}`;
+  const scanned = new Bun.Glob(include).scanSync(`src/${Pages.DIR}`);
 
   for (const path of scanned) {
     const module = await import(`./${path}`);
@@ -20,4 +20,27 @@ test(`${PAGES} folder - each page exports a request handler that returns HTML re
   }
 
   expect.hasAssertions();
+});
+
+test(`${Pages.DIR} - doesn't contain any ".test.ts" files`, async () => {
+  const include = "**/**.test.ts";
+  const scanned = new Bun.Glob(include).scanSync(`src/${Pages.DIR}`);
+
+  for (const path of scanned) {
+    throw new Error(
+      `Found a test file with disallowed extension: ${path}
+
+      NOTE: ${Pages.DIR} folder shouldn't include files with '.test.ts' extension.
+      This is to prevent test files to be accidentally matched as regular pages.
+
+      Use '.test.tsx' extenstion instead.
+
+      NOTE: this is a temporary workaround due to limitations of Bun's FileSystemRouter.
+      @see https://github.com/oven-sh/bun/issues/5822
+      @see https://github.com/oven-sh/bun/issues/7210
+      `,
+    );
+  }
+
+  expect.assertions(0);
 });
