@@ -2,6 +2,9 @@
   "name": "ayusin",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/server.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
