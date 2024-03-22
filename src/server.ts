@@ -1,14 +1,14 @@
 import { Pages } from "./pages/_";
+import { Env } from "./utils/env";
 
 export const server = Bun.serve({
-  port: import.meta.env.NODE_ENV === "test" ? 3301 : 3300,
+  port: Env.isTest() ? 3301 : 3300,
   async fetch(req) {
     const route = Pages.router.match(req);
     if (route) {
       try {
-        const { default: page } = await import(route.filePath);
-        // TODO test that it is a function
-        return page(req);
+        const { default: handle } = await import(route.filePath);
+        return handle(req);
       } catch (err) {
         return new Response(null, { status: 500 });
       }
@@ -18,6 +18,6 @@ export const server = Bun.serve({
   },
 });
 
-console.log("• started server on", server.url.href);
-if (import.meta.env.NODE_ENV === "development")
-  console.table(Object.entries(Pages.router.routes).sort());
+console.log("• server running on", server.url.href);
+
+if (Env.isDev()) console.table(Object.entries(Pages.router.routes).sort());

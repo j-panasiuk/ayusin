@@ -1,5 +1,5 @@
-const PAGES = "pages";
-const PAGE_EXTENSION = "tsx";
+export const PAGES = "pages";
+export const PAGE_EXTENSION = "ts";
 
 export namespace Pages {
   export type Page = (req: Request) => Response;

@@ -15,5 +15,5 @@ test("server responds with 200 to / (index) request path", async () => {
 
 afterAll(() => {
   server.stop();
-  console.log("• stopped server.");
+  console.log("• server stopped.");
 });
