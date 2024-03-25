@@ -1,7 +1,11 @@
 import { test, expect } from "bun:test";
 import { Pages } from "./_";
 
-test(`${Pages.DIR} - each page exports request handler that returns HTML response`, async () => {
+test(`${Pages.DIR}/ has correct folder name`, () => {
+  expect(import.meta.dir.split("/").at(-1)).toBe(Pages.DIR);
+});
+
+test(`${Pages.DIR}/ has each page export request handler that returns HTML response`, async () => {
   const include = `**/**.${Pages.EXT}`;
   const scanned = new Bun.Glob(include).scanSync(`src/${Pages.DIR}`);
 
@@ -22,7 +26,7 @@ test(`${Pages.DIR} - each page exports request handler that returns HTML respons
   expect.hasAssertions();
 });
 
-test(`${Pages.DIR} - doesn't contain any ".test.ts" files`, async () => {
+test(`${Pages.DIR}/ doesn't contain disallowed file extensions`, async () => {
   const include = "**/**.test.ts";
   const scanned = new Bun.Glob(include).scanSync(`src/${Pages.DIR}`);
 
