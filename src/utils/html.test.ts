@@ -4,6 +4,7 @@ import { html } from "./html";
 test(html.name, () => {
   expect(html``).toBe("");
   expect(html`${undefined}`).toBe("");
+  expect(html`${null}`).toBe("");
   expect(html`<div>${5}</div>`).toBe("<div>5</div>");
   expect(html`<div>${" A "}</div>`).toBe("<div> A </div>");
   expect(html`<div>${["<input />", "<input />"]}</div>`).toBe(
