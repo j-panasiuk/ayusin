@@ -1,0 +1,23 @@
+:root {
+  background: ghostwhite;
+  color: dimgray;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+a[href] {
+  color: dodgerblue;
+}
+a[href][aria-current] {
+  color: magenta;
+}

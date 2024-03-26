@@ -2,7 +2,7 @@ const NEWLINE_WITH_LEADING_WHITESPACES = /\n\s+/g;
 
 export function html(
   strings: TemplateStringsArray,
-  ...expressions: (undefined | number | string | string[])[]
+  ...expressions: (undefined | null | number | string | string[])[]
 ): string {
   let string = "";
   for (let i = 0; i < strings.length; i++) {
